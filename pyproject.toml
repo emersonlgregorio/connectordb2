@@ -1,0 +1,10 @@
+# pyproject.toml
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "connectordb"
+version = "0.1.0"
+description = "Conector customizado"
+dependencies = []
