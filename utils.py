@@ -1,6 +1,5 @@
 import unicodedata
 import json
-from flask import jsonify
 
 def remover_acentos(texto):
     # Normaliza o texto para decompor os caracteres com acentos
