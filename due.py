@@ -4,10 +4,13 @@ import requests
 import json
 
 
+
 def infosimples(keynfe, senha):
     url = 'https://api.infosimples.com/api/v2/consultas/receita-federal/nfe'
 
-    pkcs12_cert = aes256.encrypt(base64.b64encode(open("/ssh/AgroCrestani.pfx", "rb").read()).decode(),
+    file_name = keynfe[6:14]
+
+    pkcs12_cert = aes256.encrypt(base64.b64encode(open(f"/ssh/{file_name}.pfx", "rb").read()).decode(),
                                       "QIpKCTOWkvYKMReYoi9c08DS8AUG1flXsPBsof-x")
     pkcs12_pass = aes256.encrypt(f"{senha}", "QIpKCTOWkvYKMReYoi9c08DS8AUG1flXsPBsof-x")
 
@@ -27,3 +30,4 @@ if __name__ == '__main__':
     nfe = json.loads(nfe)
     status_code = nfe['code']
     mensagem = nfe['code_message']
+    print(nfe)
