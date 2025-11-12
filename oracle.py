@@ -1,10 +1,18 @@
 import json
 import datetime
 import oracledb
+import platform
 
-# oracledb.init_oracle_client(lib_dir=r"C:\oracle\instantclient_21_13")
-# oracledb.init_oracle_client(lib_dir=r"/app/oracle/instantclient")
-# oracledb.init_oracle_client()
+
+if platform.system() == 'Windows':
+    oracledb.init_oracle_client(lib_dir=r"C:\oracle\instantclient")
+elif platform.system() == 'Linux':
+    oracledb.init_oracle_client(lib_dir=r"/usr/lib/Oracle/InstantClient")
+elif platform.system() == 'Darwin':
+    oracledb.init_oracle_client()
+else:
+    print("Sistema operacional não suportado")
+    exit()   
 
 class Oracle:
 
@@ -83,16 +91,17 @@ if __name__ == '__main__':
         "password": "agnew"
     }
 
-    # query = f"""
-    #     SELECT * FROM AC_VW_NF_EXP_REMESSA WHERE DANFE_EXP LIKE '51241103262185000109550010000302161238966510'
-    # """
-    #
-    # nf_remessas = Oracle(connection).selectDb(query)
+    query = f"""
+        SELECT * FROM AC_VW_NF_EXP_REMESSA WHERE DANFE_EXP LIKE '51241103262185000109550010000302161238966510'
+    """
+    
+    nf_remessas = Oracle(connection).selectDb(query)
+    print(nf_remessas)
+    
+    # proc = Oracle(connection).callProc('zprocessaromaneio', 'bdc29093-0b52-4b2b-9d66-b02a4db3e30b','{\"pcodigo\": 6455, \"pplacaveiculo\": \"ACY5A12\", \"pplacacarreta\": \"ACY5A12\", \"ptagassociado\": null, \"pmotorista\": \"SALOMAO BARROS\", \"ptalhoes\": [{\"talhao\": \"CO-49\", \"porcentagem_carga\": 100, \"pfazenda\": \"1283848702\", \"pordermservico\": \"7433928902\"}], \"pproduto\": \"  12725502\", \"pbruto\": 55000, \"ptara\": 25000, \"pliquido\": 30000, \"ptipodocumento\": \"osg\", \"parmazem\": \"7417885002\", \"pdata\": \"21/02/2025\", \"psafra\": \"15\", \"pequipe\": \" 830877002\", \"pumidade\": \"14\", \"pimpureza\": \"1\", \"pavariados\": \"1\", \"pquebrados\": \"1\", \"pardidos\": \"1\", \"poutros\": \"1\", \"pgraosverdes\": \"1\", \"pnotaorigem\": null, \"pdataorigem\": null, \"pserieorigem\": null, \"pvalororigem\": null, \"pqtdeorigem\": null, \"pobservacao\": \"t\", \"pordemcarregamento\": 1564}')
 
-    proc = Oracle(connection).callProc('zprocessaromaneio', 'bdc29093-0b52-4b2b-9d66-b02a4db3e30b','{\"pcodigo\": 6455, \"pplacaveiculo\": \"ACY5A12\", \"pplacacarreta\": \"ACY5A12\", \"ptagassociado\": null, \"pmotorista\": \"SALOMAO BARROS\", \"ptalhoes\": [{\"talhao\": \"CO-49\", \"porcentagem_carga\": 100, \"pfazenda\": \"1283848702\", \"pordermservico\": \"7433928902\"}], \"pproduto\": \"  12725502\", \"pbruto\": 55000, \"ptara\": 25000, \"pliquido\": 30000, \"ptipodocumento\": \"osg\", \"parmazem\": \"7417885002\", \"pdata\": \"21/02/2025\", \"psafra\": \"15\", \"pequipe\": \" 830877002\", \"pumidade\": \"14\", \"pimpureza\": \"1\", \"pavariados\": \"1\", \"pquebrados\": \"1\", \"pardidos\": \"1\", \"poutros\": \"1\", \"pgraosverdes\": \"1\", \"pnotaorigem\": null, \"pdataorigem\": null, \"pserieorigem\": null, \"pvalororigem\": null, \"pqtdeorigem\": null, \"pobservacao\": \"t\", \"pordemcarregamento\": 1564}')
+    # code, message = proc
 
-    code, message = proc
-
-    print(code)
-    print(message)
+    # print(code)
+    # print(message)
 
